@@ -21,16 +21,16 @@ public class DefaultProductService implements ProductService {
             throw new IllegalArgumentException("Cannot be null");
         }
 
-        if (product.getName().length() < 3 || product.getName().length() > 32) {
-            throw new IllegalArgumentException("Name must contain 3 - 32 symbols");
-        }
-
         if (product.getPrice().doubleValue() <= 0) {
             throw new IllegalArgumentException("Price cannot be zero or less");
         }
 
         if (product.getDiscount() > 100) {
             throw new IllegalArgumentException("Discount cannot be more than 100%");
+        }
+
+        if (product.getName().length() < 3 || product.getName().length() > 32) {
+            throw new IllegalArgumentException("Name must contain 3 - 32 symbols");
         }
 
         product.setId(productIdSequence);
