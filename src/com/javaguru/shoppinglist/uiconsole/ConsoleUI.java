@@ -13,7 +13,7 @@ public class ConsoleUI {
     private ProductService productService = new ProductService();
 
     public void start() {
-        for (; ; ) {
+        while (true) {
             Scanner scanner = new Scanner(System.in);
             try {
                 System.out.println("1. Add product");
@@ -30,34 +30,23 @@ public class ConsoleUI {
                     case 3:
                         System.exit(0);
                 }
-            } catch (InputMismatchException | NumberFormatException | ProductValidationException e) {
-                if (e instanceof ProductValidationException) {
-                    System.out.println(e.getMessage());
-                } else System.out.println("Input error!");
+            } catch (InputMismatchException | NumberFormatException e) {
+                System.out.println("Input error!");
+            } catch (ProductValidationException u) {
+                System.out.println(u.getMessage());
             }
         }
     }
 
     private void addProduct() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter product name:");
-        String name = scanner.nextLine();
-        System.out.println("Enter product price: ");
-        String price = scanner.nextLine();
-        System.out.println("Enter product discount: ");
-        Integer discount = scanner.nextInt();
-        System.out.println("Enter product category: ");
-        String category = scanner.next();
-        System.out.println("Enter product description: ");
-        String description = scanner.next();
 
         Product product = new Product();
 
-        product.setName(name);
-        product.setPrice(new BigDecimal(price));
-        product.setDiscount(discount);
-        product.setCategory(category);
-        product.setDescription(description);
+        product.setName(askProductName());
+        product.setPrice(askProductPrice());
+        product.setDiscount(askProductDiscount());
+        product.setCategory(askProductCategory());
+        product.setDescription(askProductDescription());
 
         Long id = productService.addProduct(product);
         System.out.println("Result: " + id);
@@ -71,4 +60,43 @@ public class ConsoleUI {
         System.out.println(product);
     }
 
+    private String askProductName() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter product name:");
+        String name = scanner.nextLine();
+        return name;
+    }
+
+    private BigDecimal askProductPrice() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter product price: ");
+        BigDecimal price = scanner.nextBigDecimal();
+        return price;
+    }
+
+    private Integer askProductDiscount() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter product discount: ");
+        Integer discount = scanner.nextInt();
+        return discount;
+    }
+
+    private String askProductCategory() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter product category: ");
+        String category = scanner.next();
+        return category;
+    }
+
+    private String askProductDescription() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter product description: ");
+        String description = scanner.next();
+        return description;
+    }
 }
