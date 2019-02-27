@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public class ProductPriceValidationRule implements ProductValidationRule {
 
-    static BigDecimal zeroPrice = new BigDecimal(0);
+    private final BigDecimal zeroPrice = new BigDecimal(0);
 
     @Override
     public void validate(Product product) {
@@ -15,5 +15,4 @@ public class ProductPriceValidationRule implements ProductValidationRule {
             throw new ProductValidationException("Price cannot be zero or less");
         }
     }
-
 }

@@ -2,9 +2,9 @@ package com.javaguru.shoppinglist.service.validation;
 
 import com.javaguru.shoppinglist.domain.Product;
 
-public class ProductDiscountValidationRule implements ProductValidationRule {
+public class ProductMaximalDiscountValidationRule implements ProductValidationRule {
 
-    static int maximalDiscount = 100;
+    private final double maximalDiscount = 100;
 
     @Override
     public void validate(Product product) {

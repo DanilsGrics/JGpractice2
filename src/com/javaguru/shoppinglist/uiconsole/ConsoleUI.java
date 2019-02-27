@@ -10,7 +10,11 @@ import java.util.Scanner;
 
 public class ConsoleUI {
 
-    private ProductService productService = new ProductService();
+    private final ProductService productService;
+
+    public ConsoleUI(ProductService productService) {
+        this.productService = productService;
+    }
 
     public void start() {
         while (true) {
@@ -64,39 +68,34 @@ public class ConsoleUI {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter product name:");
-        String name = scanner.nextLine();
-        return name;
+        return scanner.nextLine();
     }
 
     private BigDecimal askProductPrice() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter product price: ");
-        BigDecimal price = scanner.nextBigDecimal();
-        return price;
+        return scanner.nextBigDecimal();
     }
 
     private Integer askProductDiscount() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter product discount: ");
-        Integer discount = scanner.nextInt();
-        return discount;
+        return scanner.nextInt();
     }
 
     private String askProductCategory() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter product category: ");
-        String category = scanner.next();
-        return category;
+        return scanner.next();
     }
 
     private String askProductDescription() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter product description: ");
-        String description = scanner.next();
-        return description;
+        return scanner.next();
     }
 }

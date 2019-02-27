@@ -1,6 +1,7 @@
 package com.javaguru.shoppinglist.database;
 
 import com.javaguru.shoppinglist.domain.Product;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,4 +21,10 @@ public class ProductRepository {
         return product;
     }
 
+    public boolean existInRepositoryByName(String name) {
+        return database
+                .values()
+                .stream()
+                .anyMatch(product -> product.getName().equalsIgnoreCase(name));
+    }
 }

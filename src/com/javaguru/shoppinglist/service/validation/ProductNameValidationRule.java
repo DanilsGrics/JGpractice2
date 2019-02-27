@@ -4,8 +4,8 @@ import com.javaguru.shoppinglist.domain.Product;
 
 public class ProductNameValidationRule implements ProductValidationRule {
 
-    static int minimalNameLength = 3;
-    static int maximalNameLength = 32;
+    private final int minimalNameLength = 3;
+    private final int maximalNameLength = 32;
 
     @Override
     public void validate(Product product) {
