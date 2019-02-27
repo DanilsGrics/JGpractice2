@@ -78,11 +78,15 @@ public class ConsoleUI {
         return scanner.nextBigDecimal();
     }
 
-    private Integer askProductDiscount() {
+    private Double askProductDiscount() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter product discount: ");
-        return scanner.nextInt();
+        String discount = scanner.next();
+
+        discount.replace('.', ',');
+
+        return Double.parseDouble(discount);
     }
 
     private String askProductCategory() {
