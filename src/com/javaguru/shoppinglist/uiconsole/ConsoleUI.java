@@ -75,18 +75,18 @@ public class ConsoleUI {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter product price: ");
-        return scanner.nextBigDecimal();
+        String priceWithDotOrComma = scanner.next();
+
+        return new BigDecimal(priceWithDotOrComma.replace(',', '.'));
     }
 
     private Double askProductDiscount() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter product discount: ");
-        String discount = scanner.next();
+        String discountWithDotOrComma = scanner.next();
 
-        discount.replace('.', ',');
-
-        return Double.parseDouble(discount);
+        return Double.parseDouble(discountWithDotOrComma.replace(',', '.'));
     }
 
     private String askProductCategory() {
