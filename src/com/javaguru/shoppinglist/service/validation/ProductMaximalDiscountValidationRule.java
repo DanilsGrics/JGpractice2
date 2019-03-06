@@ -2,14 +2,14 @@ package com.javaguru.shoppinglist.service.validation;
 
 import com.javaguru.shoppinglist.domain.Product;
 
-public class ProductDiscountValidationRule implements ProductValidationRule {
+public class ProductMaximalDiscountValidationRule implements ProductValidationRule {
 
-    static int maximalDiscount = 100;
+    private final double MAXIMAL_DISCOUNT = 100;
 
     @Override
     public void validate(Product product) {
         checkNotNull(product);
-        if (product.getDiscount() > maximalDiscount) {
+        if (product.getDiscount() > MAXIMAL_DISCOUNT) {
             throw new ProductValidationException("Discount cannot be more than 100%");
         }
     }
