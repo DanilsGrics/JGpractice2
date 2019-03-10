@@ -4,14 +4,15 @@ import com.javaguru.shoppinglist.domain.Product;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProductRepository {
 
     private Map<Long, Product> database = new HashMap<>();
     private Long productIdSequence = 0L;
 
-    public Product findProductById(Long id) {
-        return database.get(id);
+    public Optional<Product> findProductById(Long id) {
+        return Optional.ofNullable(database.get(id));
     }
 
     public Product insertProduct(Product product) {
