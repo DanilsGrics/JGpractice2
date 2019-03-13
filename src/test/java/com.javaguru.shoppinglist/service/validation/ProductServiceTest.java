@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,6 +23,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceTest {
+
+    private final Long TEST_PRODUCT_ID = 3L;
 
     @Mock
     private ProductRepository repository;
@@ -53,9 +54,11 @@ public class ProductServiceTest {
 
     @Test
     public void shouldFindProductById() {
-        when(repository.findProductById(3L)).thenReturn(Optional.ofNullable(product()));
+        when(repository
+                .findProductById(TEST_PRODUCT_ID))
+                .thenReturn(Optional.ofNullable(product()));
 
-        Product result = victim.findProductById(3L);
+        Product result = victim.findProductById(TEST_PRODUCT_ID);
 
         assertEquals(result, product());
     }
@@ -64,19 +67,15 @@ public class ProductServiceTest {
     public void shouldThrowExceptionProductNotFound() {
         when(repository.findProductById(any())).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> victim.findProductById(3L))
+        assertThatThrownBy(() -> victim.findProductById(TEST_PRODUCT_ID))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Product not found, id: 3");
     }
 
     private Product product() {
         Product product = new Product();
-        product.setName("TEST_NAME");
-        product.setPrice(new BigDecimal(25));
-        product.setDiscount(10D);
-        product.setCategory("VEGETABLES");
-        product.setDescription("TEST_DESCRIPTION");
-        product.setId(3L);
+
+        product.setId(TEST_PRODUCT_ID);
         return product;
     }
 }

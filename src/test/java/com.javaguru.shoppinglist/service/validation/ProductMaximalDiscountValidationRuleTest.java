@@ -16,6 +16,10 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductMaximalDiscountValidationRuleTest {
 
+    private final Double UNSUCCESSFUL_DISCOUNT_VALUE = 105D;
+    private final Double SUCCESSFUL_DISCOUNT_VALUE = 10D;
+    private final BigDecimal TEST_PRODUCT_PRICE = new BigDecimal(25);
+
     @Spy
     @InjectMocks
     private ProductMaximalDiscountValidationRule victim;
@@ -24,7 +28,7 @@ public class ProductMaximalDiscountValidationRuleTest {
 
     @Test
     public void shouldThrowProductValidationExceptionDiscountIsTooHigh() {
-        product = product(105D);
+        product = product(UNSUCCESSFUL_DISCOUNT_VALUE);
 
         assertThatThrownBy(() -> victim.validate(product))
                 .isInstanceOf(ProductValidationException.class)
@@ -34,14 +38,16 @@ public class ProductMaximalDiscountValidationRuleTest {
 
     @Test
     public void shouldValidateSuccess() {
-        product = product(10D);
+        product = product(SUCCESSFUL_DISCOUNT_VALUE);
+
         victim.validate(product);
         verify(victim).checkNotNull(product);
     }
 
     private Product product(Double discount) {
         Product product = new Product();
-        product.setPrice(new BigDecimal(25));
+
+        product.setPrice(TEST_PRODUCT_PRICE);
         product.setDiscount(discount);
         return product;
     }

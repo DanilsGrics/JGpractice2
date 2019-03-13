@@ -16,6 +16,9 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductPriceValidationRuleTest {
 
+    private final BigDecimal UNSUCCESSFUL_PRICE_VALUE = new BigDecimal(0);
+    private final BigDecimal SUCCESSFUL_PRICE_VALUE = new BigDecimal(25);
+
     @Spy
     @InjectMocks
     private ProductPriceValidationRule victim;
@@ -24,7 +27,7 @@ public class ProductPriceValidationRuleTest {
 
     @Test
     public void shouldThrowProductValidationExceptionPriceIsIncorrect() {
-        product = product(new BigDecimal(0));
+        product = product(UNSUCCESSFUL_PRICE_VALUE);
 
         assertThatThrownBy(() -> victim.validate(product))
                 .isInstanceOf(ProductValidationException.class)
@@ -34,13 +37,14 @@ public class ProductPriceValidationRuleTest {
 
     @Test
     public void shouldValidateSuccess() {
-        product = product(new BigDecimal(25));
+        product = product(SUCCESSFUL_PRICE_VALUE);
         victim.validate(product);
         verify(victim).checkNotNull(product);
     }
 
     private Product product(BigDecimal price) {
         Product product = new Product();
+
         product.setPrice(price);
         return product;
     }

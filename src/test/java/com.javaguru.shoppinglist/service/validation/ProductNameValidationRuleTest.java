@@ -47,6 +47,7 @@ public class ProductNameValidationRuleTest {
 
     private Product product(String name) {
         Product product = new Product();
+
         product.setName(name);
         return product;
     }

@@ -16,16 +16,19 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductMinimalPriceForDiscountValidationRuleTest {
 
+    private final BigDecimal UNSUCCESSFUL_PRICE_VALUE = new BigDecimal(5);
+    private final BigDecimal SUCCESSFUL_PRICE_VALUE = new BigDecimal(25);
+    private final Double TEST_PRODUCT_DISCOUNT = 25D;
+
     @Spy
     @InjectMocks
     private ProductMinimalPriceForDiscountValidationRule victim;
 
     private Product product;
 
-
     @Test
     public void shouldThrowProductValidationExceptionPriceIsTooLow() {
-        product = product(new BigDecimal(5));
+        product = product(UNSUCCESSFUL_PRICE_VALUE);
 
         assertThatThrownBy(() -> victim.validate(product))
                 .isInstanceOf(ProductValidationException.class)
@@ -35,15 +38,17 @@ public class ProductMinimalPriceForDiscountValidationRuleTest {
 
     @Test
     public void shouldValidateSuccess() {
-        product = product(new BigDecimal(25));
+        product = product(SUCCESSFUL_PRICE_VALUE);
+
         victim.validate(product);
         verify(victim).checkNotNull(product);
     }
 
     private Product product(BigDecimal price) {
         Product product = new Product();
+
         product.setPrice(price);
-        product.setDiscount(5D);
+        product.setDiscount(TEST_PRODUCT_DISCOUNT);
         return product;
     }
 }
