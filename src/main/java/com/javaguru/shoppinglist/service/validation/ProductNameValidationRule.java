@@ -10,6 +10,7 @@ public class ProductNameValidationRule implements ProductValidationRule {
     @Override
     public void validate(Product product) {
         checkNotNull(product);
+
         if (product
                 .getName().length() < MINIMAL_NAME_LENGTH ||
                 product.getName().length() > MAXIMAL_NAME_LENGTH) {
