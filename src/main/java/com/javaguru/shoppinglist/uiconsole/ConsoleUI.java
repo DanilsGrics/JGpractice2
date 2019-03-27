@@ -4,14 +4,19 @@ import com.javaguru.shoppinglist.domain.Product;
 import com.javaguru.shoppinglist.service.ProductService;
 import com.javaguru.shoppinglist.service.validation.ProductValidationException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@Component
 public class ConsoleUI {
 
     private final ProductService productService;
 
+    @Autowired
     public ConsoleUI(ProductService productService) {
         this.productService = productService;
     }
@@ -34,10 +39,10 @@ public class ConsoleUI {
                     case 3:
                         System.exit(0);
                 }
-            } catch (InputMismatchException | NumberFormatException e) {
+            } catch (InputMismatchException | IllegalArgumentException exception) {
                 System.out.println("Input error!");
-            } catch (ProductValidationException u) {
-                System.out.println(u.getMessage());
+            } catch (ProductValidationException exception) {
+                System.out.println(exception.getMessage());
             }
         }
     }
