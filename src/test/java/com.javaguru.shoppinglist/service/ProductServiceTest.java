@@ -1,8 +1,9 @@
-package com.javaguru.shoppinglist.service.validation;
+package com.javaguru.shoppinglist.service;
 
-import com.javaguru.shoppinglist.database.ProductRepository;
+import com.javaguru.shoppinglist.database.ProductInMemoryRepository;
 import com.javaguru.shoppinglist.domain.Product;
 import com.javaguru.shoppinglist.service.ProductService;
+import com.javaguru.shoppinglist.service.validation.ProductValidationService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,7 @@ public class ProductServiceTest {
     private final Long TEST_PRODUCT_ID = 3L;
 
     @Mock
-    private ProductRepository repository;
+    private ProductInMemoryRepository repository;
 
     @Mock
     private ProductValidationService validationService;
