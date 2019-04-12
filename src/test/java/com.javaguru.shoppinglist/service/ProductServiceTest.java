@@ -1,8 +1,7 @@
 package com.javaguru.shoppinglist.service;
 
-import com.javaguru.shoppinglist.database.ProductInMemoryRepository;
+import com.javaguru.shoppinglist.database.InMemoryProductRepository;
 import com.javaguru.shoppinglist.domain.Product;
-import com.javaguru.shoppinglist.service.ProductService;
 import com.javaguru.shoppinglist.service.validation.ProductValidationService;
 
 import org.junit.Test;
@@ -28,7 +27,7 @@ public class ProductServiceTest {
     private final Long TEST_PRODUCT_ID = 3L;
 
     @Mock
-    private ProductInMemoryRepository repository;
+    private InMemoryProductRepository repository;
 
     @Mock
     private ProductValidationService validationService;
@@ -37,12 +36,12 @@ public class ProductServiceTest {
     private ArgumentCaptor<Product> productArgumentCaptor;
 
     @InjectMocks
-    private ProductService victim;
+    private DefaultProductService victim;
 
     @Test
     public void shouldCreateProduct() {
         Product product = product();
-        when(repository.insertProduct(product)).thenReturn(product);
+        when(repository.insertProduct(product)).thenReturn(product.getId());
 
         Long result = victim.addProduct(product);
 

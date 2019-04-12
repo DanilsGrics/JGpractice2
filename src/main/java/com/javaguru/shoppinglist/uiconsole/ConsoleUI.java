@@ -1,110 +1,45 @@
 package com.javaguru.shoppinglist.uiconsole;
 
-import com.javaguru.shoppinglist.domain.Product;
-import com.javaguru.shoppinglist.service.ProductService;
-import com.javaguru.shoppinglist.service.validation.ProductValidationException;
+import com.javaguru.shoppinglist.uiconsole.action.Action;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
 public class ConsoleUI {
 
-    private final ProductService productService;
+    private final List<Action> actions;
 
     @Autowired
-    public ConsoleUI(ProductService productService) {
-        this.productService = productService;
+    public ConsoleUI(List<Action> actions) {
+        this.actions = actions;
     }
 
     public void start() {
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        int response = 0;
+
+        while (response >= 0) {
+
+            printMenu();
+
             try {
-                System.out.println("1. Add product");
-                System.out.println("2. Find product by ID");
-                System.out.println("3. Exit");
-                int userInput = scanner.nextInt();
-                switch (userInput) {
-                    case 1:
-                        addProduct();
-                        break;
-                    case 2:
-                        findProductById();
-                        break;
-                    case 3:
-                        System.exit(0);
-                }
-            } catch (InputMismatchException | IllegalArgumentException exception) {
-                System.out.println("Input error!");
-            } catch (ProductValidationException exception) {
-                System.out.println(exception.getMessage());
+                response = scanner.nextInt();
+                actions.get(response).initiate();
+
+            } catch (Exception e) {
+                System.out.println("Error occurred! Please try again.");
+                e.printStackTrace();
             }
         }
     }
 
-    private void addProduct() {
-
-        Product product = new Product();
-
-        product.setName(askProductName());
-        product.setPrice(askProductPrice());
-        product.setDiscount(askProductDiscount());
-        product.setCategory(askProductCategory());
-        product.setDescription(askProductDescription());
-
-        Long id = productService.addProduct(product);
-        System.out.println("Result: " + id);
-    }
-
-    private void findProductById() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter product id, please: ");
-        Long id = scanner.nextLong();
-        Product product = productService.findProductById(id);
-        System.out.println(product);
-    }
-
-    private String askProductName() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter product name:");
-        return scanner.nextLine();
-    }
-
-    private BigDecimal askProductPrice() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter product price: ");
-        String priceWithDotOrComma = scanner.next();
-
-        return new BigDecimal(priceWithDotOrComma.replace(',', '.'));
-    }
-
-    private Double askProductDiscount() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter product discount: ");
-        String discountWithDotOrComma = scanner.next();
-
-        return Double.parseDouble(discountWithDotOrComma.replace(',', '.'));
-    }
-
-    private String askProductCategory() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter product category: ");
-        return scanner.next();
-    }
-
-    private String askProductDescription() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter product description: ");
-        return scanner.next();
+    private void printMenu() {
+        for (int i = 0; i < actions.size(); i++) {
+            System.out.println(i + ". " + actions.get(i));
+        }
     }
 }
