@@ -1,6 +1,6 @@
 package com.javaguru.shoppinglist.service.validation;
 
-import com.javaguru.shoppinglist.database.ProductInMemoryRepository;
+import com.javaguru.shoppinglist.database.InMemoryProductRepository;
 import com.javaguru.shoppinglist.domain.Product;
 
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class ProductUniqueNameValidationRuleTest {
     private final String TEST_PRODUCT_NAME = "TEST_NAME";
 
     @Mock
-    private ProductInMemoryRepository repository;
+    private InMemoryProductRepository repository;
 
     @Spy
     @InjectMocks

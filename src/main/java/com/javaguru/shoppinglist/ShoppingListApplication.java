@@ -13,7 +13,7 @@ class ShoppingListApplication {
         ApplicationContext context
                 = new AnnotationConfigApplicationContext(SpringApplicationConfig.class);
 
-        ConsoleUI condoleApplication = context.getBean(ConsoleUI.class);
-        condoleApplication.start();
+        ConsoleUI consoleApplication = context.getBean(ConsoleUI.class);
+        consoleApplication.start();
     }
 }
